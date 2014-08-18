@@ -30,19 +30,21 @@
 
 package net.doubledoordev.letitburn;
 
+import cpw.mods.fml.client.config.IConfigElement;
 import cpw.mods.fml.common.IFuelHandler;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.registry.GameData;
 import cpw.mods.fml.common.registry.GameRegistry;
-import net.doubledoordev.lib.DevPerks;
+import net.doubledoordev.d3core.util.ID3Mod;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.config.ConfigElement;
 import net.minecraftforge.common.config.Configuration;
 import org.apache.logging.log4j.Logger;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -50,7 +52,7 @@ import java.util.regex.Pattern;
  * @author Dries007
  */
 @Mod(modid = LetItBurn.MODID)
-public class LetItBurn
+public class LetItBurn implements ID3Mod
 {
     public static final String MODID = "LetItBurn";
     public static final Pattern PATTERN = Pattern.compile("(?<name>.+?):?(?<meta>[\\d]+)? ?= ?(?<time>\\d+)");
@@ -62,20 +64,15 @@ public class LetItBurn
     private boolean                       debug       = false;
     private HashMap<String, BurnTimeData> burnTimeMap = new HashMap<>();
     private Logger logger;
+    private Configuration configuration;
 
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event)
     {
         logger = event.getModLog();
 
-        Configuration configuration = new Configuration(event.getSuggestedConfigurationFile());
-        String comment = "List formatted like this:  'itemname = time' OR 'itemname;meta = time'  Include the modid (or minecraft:)!";
-        // public Property get(String category, String key, String[] defaultValues, String comment, Pattern validationPattern)
-        strings = configuration.get(MODID, "burntimes", strings, comment, PATTERN).getStringList();
-
-        debug = configuration.getBoolean("debug", MODID, debug, "Enable extra debug output.");
-        if (configuration.getBoolean("sillyness", MODID, true, "Disable sillyness only if you want to piss off the developers XD")) MinecraftForge.EVENT_BUS.register(new DevPerks(debug));
-        if (configuration.hasChanged()) configuration.save();
+        configuration = new Configuration(event.getSuggestedConfigurationFile());
+        syncConfig();
     }
 
     @Mod.EventHandler
@@ -118,6 +115,24 @@ public class LetItBurn
                 return 0;
             }
         });
+    }
+
+    @Override
+    public void syncConfig()
+    {
+        configuration.setCategoryLanguageKey(MODID, "d3.letitburn.config.letitburn");
+        configuration.setCategoryRequiresMcRestart(MODID, true);
+
+        String comment = "List formatted like this:  'itemname = time' OR 'itemname;meta = time'  Include the modid (or minecraft:)!";
+        // public Property get(String category, String key, String[] defaultValues, String comment, Pattern validationPattern)
+        strings = configuration.get(MODID, "burntimes", strings, comment, PATTERN).getStringList();
+        if (configuration.hasChanged()) configuration.save();
+    }
+
+    @Override
+    public void addConfigElements(List<IConfigElement> configElements)
+    {
+        configElements.add(new ConfigElement(configuration.getCategory(MODID.toLowerCase())));
     }
 
     public static final class BurnTimeData
