@@ -1,0 +1,21 @@
+[
+  {
+    "modid": "letitburn",
+    "name": "LetItBurn",
+    "description": "Make items burnable",
+    "version": "${version}",
+    "mcversion": "${mcversion}",
+    "url": "https://minecraft.curseforge.com/projects/let-it-burn-add-furnace-fuel-with-config",
+    "updateUrl": "http://doubledoordev.net/LetItBurn.json",
+    "authorList": [
+      "Dries007",
+      "Claycorp"
+    ],
+    "credits": "",
+    "logoFile": "",
+    "screenshots": [],
+    "dependencies": [
+      "forge"
+    ]
+  }
+]
