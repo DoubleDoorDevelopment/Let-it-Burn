@@ -2,10 +2,10 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/LetItBurn.iml" filepath="$PROJECT_DIR$/LetItBurn.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/LetItBurn_api.iml" filepath="$PROJECT_DIR$/.idea/modules/LetItBurn_api.iml" group="LetItBurn" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/LetItBurn_main.iml" filepath="$PROJECT_DIR$/.idea/modules/LetItBurn_main.iml" group="LetItBurn" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/LetItBurn_test.iml" filepath="$PROJECT_DIR$/.idea/modules/LetItBurn_test.iml" group="LetItBurn" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Let-it-Burn.iml" filepath="$PROJECT_DIR$/.idea/modules/Let-it-Burn.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Let-it-Burn_api.iml" filepath="$PROJECT_DIR$/.idea/modules/Let-it-Burn_api.iml" group="Let-it-Burn" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Let-it-Burn_main.iml" filepath="$PROJECT_DIR$/.idea/modules/Let-it-Burn_main.iml" group="Let-it-Burn" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Let-it-Burn_test.iml" filepath="$PROJECT_DIR$/.idea/modules/Let-it-Burn_test.iml" group="Let-it-Burn" />
     </modules>
   </component>
 </project>

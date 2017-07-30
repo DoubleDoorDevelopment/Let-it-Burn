@@ -5,7 +5,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.event.furnace.FurnaceFuelBurnTimeEvent;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
@@ -87,19 +89,17 @@ public class LetItBurn
         return rl + "\t" + meta;
     }
 
-    private static int getBurnTime(ItemStack s)
+    @SubscribeEvent
+    public void onFurnaceFuelBurnTime(FurnaceFuelBurnTimeEvent event)
     {
-        String k = makeKey(s.getItem().getRegistryName(), s.getMetadata());
-        if (MAP.containsKey(k)) return MAP.get(k);
-        k = makeKey(s.getItem().getRegistryName(), OreDictionary.WILDCARD_VALUE);
-        if (MAP.containsKey(k)) return MAP.get(k);
-        return 0;
-    }
-
-    @Mod.EventHandler
-    public void init(FMLInitializationEvent event)
-    {
-        GameRegistry.registerFuelHandler(LetItBurn::getBurnTime);
+        String k = makeKey(event.getItemStack().getItem().getRegistryName(), event.getItemStack().getMetadata());
+        if (MAP.containsKey(k))
+        {
+            event.setBurnTime(MAP.get(k));
+            return;
+        }
+        k = makeKey(event.getItemStack().getItem().getRegistryName(), OreDictionary.WILDCARD_VALUE);
+        if (MAP.containsKey(k)) event.setBurnTime(MAP.get(k));
     }
 
     public static Configuration getConfig()

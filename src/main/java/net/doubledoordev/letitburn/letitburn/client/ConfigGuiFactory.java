@@ -8,6 +8,8 @@ import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.client.IModGuiFactory;
 import net.minecraftforge.fml.client.config.GuiConfig;
 import net.minecraftforge.fml.client.config.IConfigElement;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +18,7 @@ import java.util.Set;
 /**
  * @author Dries007
  */
+@SideOnly(Side.CLIENT)
 @SuppressWarnings("unused")
 public class ConfigGuiFactory implements IModGuiFactory
 {
@@ -56,9 +59,15 @@ public class ConfigGuiFactory implements IModGuiFactory
     }
 
     @Override
-    public Class<? extends GuiScreen> mainConfigGuiClass()
+    public boolean hasConfigGui()
     {
-        return ConfigGuiScreen.class;
+        return true;
+    }
+
+    @Override
+    public GuiScreen createConfigGui(GuiScreen parentScreen)
+    {
+        return new ConfigGuiScreen(parentScreen);
     }
 
     @Override
@@ -67,10 +76,4 @@ public class ConfigGuiFactory implements IModGuiFactory
         return null;
     }
 
-    @SuppressWarnings("deprecation")
-    @Override
-    public RuntimeOptionGuiHandler getHandlerFor(RuntimeOptionCategoryElement element)
-    {
-        return null;
-    }
 }
